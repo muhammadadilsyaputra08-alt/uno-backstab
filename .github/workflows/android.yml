@@ -34,7 +34,7 @@ jobs:
           distribution: temurin
           java-version: "17"
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew :app:testDebugUnitTest --stacktrace
+      - run: chmod +x gradlew && ./gradlew :app:testDebugUnitTest --stacktrace
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -51,7 +51,7 @@ jobs:
           distribution: temurin
           java-version: "17"
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew :app:lintDebug --stacktrace
+      - run: chmod +x gradlew && ./gradlew :app:lintDebug --stacktrace
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -84,7 +84,7 @@ jobs:
           else
             echo "Tanpa keystore: APK release tidak bertanda tangan."
           fi
-      - run: ./gradlew :app:assembleDebug :app:assembleRelease :app:bundleRelease --stacktrace
+      - run: chmod +x gradlew && ./gradlew :app:assembleDebug :app:assembleRelease :app:bundleRelease --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: backstab-debug-apk
