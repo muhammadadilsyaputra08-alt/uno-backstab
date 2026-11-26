@@ -1,0 +1,1086 @@
+{
+ "total": 120,
+ "back": "cards/png/back.png",
+ "cards": [
+  {
+   "card_id": "CR_0_a",
+   "card_type": "number",
+   "name": "CRIMSON 0",
+   "color": "crimson",
+   "value": 0,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_0.png"
+  },
+  {
+   "card_id": "CR_0_b",
+   "card_type": "number",
+   "name": "CRIMSON 0",
+   "color": "crimson",
+   "value": 0,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_0.png"
+  },
+  {
+   "card_id": "CR_1_a",
+   "card_type": "number",
+   "name": "CRIMSON 1",
+   "color": "crimson",
+   "value": 1,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_1.png"
+  },
+  {
+   "card_id": "CR_1_b",
+   "card_type": "number",
+   "name": "CRIMSON 1",
+   "color": "crimson",
+   "value": 1,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_1.png"
+  },
+  {
+   "card_id": "CR_2_a",
+   "card_type": "number",
+   "name": "CRIMSON 2",
+   "color": "crimson",
+   "value": 2,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_2.png"
+  },
+  {
+   "card_id": "CR_2_b",
+   "card_type": "number",
+   "name": "CRIMSON 2",
+   "color": "crimson",
+   "value": 2,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_2.png"
+  },
+  {
+   "card_id": "CR_3_a",
+   "card_type": "number",
+   "name": "CRIMSON 3",
+   "color": "crimson",
+   "value": 3,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_3.png"
+  },
+  {
+   "card_id": "CR_3_b",
+   "card_type": "number",
+   "name": "CRIMSON 3",
+   "color": "crimson",
+   "value": 3,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_3.png"
+  },
+  {
+   "card_id": "CR_4_a",
+   "card_type": "number",
+   "name": "CRIMSON 4",
+   "color": "crimson",
+   "value": 4,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_4.png"
+  },
+  {
+   "card_id": "CR_4_b",
+   "card_type": "number",
+   "name": "CRIMSON 4",
+   "color": "crimson",
+   "value": 4,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_4.png"
+  },
+  {
+   "card_id": "CR_5_a",
+   "card_type": "number",
+   "name": "CRIMSON 5",
+   "color": "crimson",
+   "value": 5,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_5.png"
+  },
+  {
+   "card_id": "CR_5_b",
+   "card_type": "number",
+   "name": "CRIMSON 5",
+   "color": "crimson",
+   "value": 5,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_5.png"
+  },
+  {
+   "card_id": "CR_6_a",
+   "card_type": "number",
+   "name": "CRIMSON 6",
+   "color": "crimson",
+   "value": 6,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_6.png"
+  },
+  {
+   "card_id": "CR_6_b",
+   "card_type": "number",
+   "name": "CRIMSON 6",
+   "color": "crimson",
+   "value": 6,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_6.png"
+  },
+  {
+   "card_id": "CR_7_a",
+   "card_type": "number",
+   "name": "CRIMSON 7",
+   "color": "crimson",
+   "value": 7,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_7.png"
+  },
+  {
+   "card_id": "CR_7_b",
+   "card_type": "number",
+   "name": "CRIMSON 7",
+   "color": "crimson",
+   "value": 7,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_7.png"
+  },
+  {
+   "card_id": "CR_8_a",
+   "card_type": "number",
+   "name": "CRIMSON 8",
+   "color": "crimson",
+   "value": 8,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_8.png"
+  },
+  {
+   "card_id": "CR_8_b",
+   "card_type": "number",
+   "name": "CRIMSON 8",
+   "color": "crimson",
+   "value": 8,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_8.png"
+  },
+  {
+   "card_id": "CR_9_a",
+   "card_type": "number",
+   "name": "CRIMSON 9",
+   "color": "crimson",
+   "value": 9,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_9.png"
+  },
+  {
+   "card_id": "CR_9_b",
+   "card_type": "number",
+   "name": "CRIMSON 9",
+   "color": "crimson",
+   "value": 9,
+   "power_level": 1,
+   "asset": "cards/png/num_CR_9.png"
+  },
+  {
+   "card_id": "AZ_0_a",
+   "card_type": "number",
+   "name": "AZURE 0",
+   "color": "azure",
+   "value": 0,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_0.png"
+  },
+  {
+   "card_id": "AZ_0_b",
+   "card_type": "number",
+   "name": "AZURE 0",
+   "color": "azure",
+   "value": 0,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_0.png"
+  },
+  {
+   "card_id": "AZ_1_a",
+   "card_type": "number",
+   "name": "AZURE 1",
+   "color": "azure",
+   "value": 1,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_1.png"
+  },
+  {
+   "card_id": "AZ_1_b",
+   "card_type": "number",
+   "name": "AZURE 1",
+   "color": "azure",
+   "value": 1,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_1.png"
+  },
+  {
+   "card_id": "AZ_2_a",
+   "card_type": "number",
+   "name": "AZURE 2",
+   "color": "azure",
+   "value": 2,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_2.png"
+  },
+  {
+   "card_id": "AZ_2_b",
+   "card_type": "number",
+   "name": "AZURE 2",
+   "color": "azure",
+   "value": 2,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_2.png"
+  },
+  {
+   "card_id": "AZ_3_a",
+   "card_type": "number",
+   "name": "AZURE 3",
+   "color": "azure",
+   "value": 3,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_3.png"
+  },
+  {
+   "card_id": "AZ_3_b",
+   "card_type": "number",
+   "name": "AZURE 3",
+   "color": "azure",
+   "value": 3,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_3.png"
+  },
+  {
+   "card_id": "AZ_4_a",
+   "card_type": "number",
+   "name": "AZURE 4",
+   "color": "azure",
+   "value": 4,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_4.png"
+  },
+  {
+   "card_id": "AZ_4_b",
+   "card_type": "number",
+   "name": "AZURE 4",
+   "color": "azure",
+   "value": 4,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_4.png"
+  },
+  {
+   "card_id": "AZ_5_a",
+   "card_type": "number",
+   "name": "AZURE 5",
+   "color": "azure",
+   "value": 5,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_5.png"
+  },
+  {
+   "card_id": "AZ_5_b",
+   "card_type": "number",
+   "name": "AZURE 5",
+   "color": "azure",
+   "value": 5,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_5.png"
+  },
+  {
+   "card_id": "AZ_6_a",
+   "card_type": "number",
+   "name": "AZURE 6",
+   "color": "azure",
+   "value": 6,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_6.png"
+  },
+  {
+   "card_id": "AZ_6_b",
+   "card_type": "number",
+   "name": "AZURE 6",
+   "color": "azure",
+   "value": 6,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_6.png"
+  },
+  {
+   "card_id": "AZ_7_a",
+   "card_type": "number",
+   "name": "AZURE 7",
+   "color": "azure",
+   "value": 7,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_7.png"
+  },
+  {
+   "card_id": "AZ_7_b",
+   "card_type": "number",
+   "name": "AZURE 7",
+   "color": "azure",
+   "value": 7,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_7.png"
+  },
+  {
+   "card_id": "AZ_8_a",
+   "card_type": "number",
+   "name": "AZURE 8",
+   "color": "azure",
+   "value": 8,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_8.png"
+  },
+  {
+   "card_id": "AZ_8_b",
+   "card_type": "number",
+   "name": "AZURE 8",
+   "color": "azure",
+   "value": 8,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_8.png"
+  },
+  {
+   "card_id": "AZ_9_a",
+   "card_type": "number",
+   "name": "AZURE 9",
+   "color": "azure",
+   "value": 9,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_9.png"
+  },
+  {
+   "card_id": "AZ_9_b",
+   "card_type": "number",
+   "name": "AZURE 9",
+   "color": "azure",
+   "value": 9,
+   "power_level": 1,
+   "asset": "cards/png/num_AZ_9.png"
+  },
+  {
+   "card_id": "EM_0_a",
+   "card_type": "number",
+   "name": "EMERALD 0",
+   "color": "emerald",
+   "value": 0,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_0.png"
+  },
+  {
+   "card_id": "EM_0_b",
+   "card_type": "number",
+   "name": "EMERALD 0",
+   "color": "emerald",
+   "value": 0,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_0.png"
+  },
+  {
+   "card_id": "EM_1_a",
+   "card_type": "number",
+   "name": "EMERALD 1",
+   "color": "emerald",
+   "value": 1,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_1.png"
+  },
+  {
+   "card_id": "EM_1_b",
+   "card_type": "number",
+   "name": "EMERALD 1",
+   "color": "emerald",
+   "value": 1,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_1.png"
+  },
+  {
+   "card_id": "EM_2_a",
+   "card_type": "number",
+   "name": "EMERALD 2",
+   "color": "emerald",
+   "value": 2,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_2.png"
+  },
+  {
+   "card_id": "EM_2_b",
+   "card_type": "number",
+   "name": "EMERALD 2",
+   "color": "emerald",
+   "value": 2,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_2.png"
+  },
+  {
+   "card_id": "EM_3_a",
+   "card_type": "number",
+   "name": "EMERALD 3",
+   "color": "emerald",
+   "value": 3,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_3.png"
+  },
+  {
+   "card_id": "EM_3_b",
+   "card_type": "number",
+   "name": "EMERALD 3",
+   "color": "emerald",
+   "value": 3,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_3.png"
+  },
+  {
+   "card_id": "EM_4_a",
+   "card_type": "number",
+   "name": "EMERALD 4",
+   "color": "emerald",
+   "value": 4,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_4.png"
+  },
+  {
+   "card_id": "EM_4_b",
+   "card_type": "number",
+   "name": "EMERALD 4",
+   "color": "emerald",
+   "value": 4,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_4.png"
+  },
+  {
+   "card_id": "EM_5_a",
+   "card_type": "number",
+   "name": "EMERALD 5",
+   "color": "emerald",
+   "value": 5,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_5.png"
+  },
+  {
+   "card_id": "EM_5_b",
+   "card_type": "number",
+   "name": "EMERALD 5",
+   "color": "emerald",
+   "value": 5,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_5.png"
+  },
+  {
+   "card_id": "EM_6_a",
+   "card_type": "number",
+   "name": "EMERALD 6",
+   "color": "emerald",
+   "value": 6,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_6.png"
+  },
+  {
+   "card_id": "EM_6_b",
+   "card_type": "number",
+   "name": "EMERALD 6",
+   "color": "emerald",
+   "value": 6,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_6.png"
+  },
+  {
+   "card_id": "EM_7_a",
+   "card_type": "number",
+   "name": "EMERALD 7",
+   "color": "emerald",
+   "value": 7,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_7.png"
+  },
+  {
+   "card_id": "EM_7_b",
+   "card_type": "number",
+   "name": "EMERALD 7",
+   "color": "emerald",
+   "value": 7,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_7.png"
+  },
+  {
+   "card_id": "EM_8_a",
+   "card_type": "number",
+   "name": "EMERALD 8",
+   "color": "emerald",
+   "value": 8,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_8.png"
+  },
+  {
+   "card_id": "EM_8_b",
+   "card_type": "number",
+   "name": "EMERALD 8",
+   "color": "emerald",
+   "value": 8,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_8.png"
+  },
+  {
+   "card_id": "EM_9_a",
+   "card_type": "number",
+   "name": "EMERALD 9",
+   "color": "emerald",
+   "value": 9,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_9.png"
+  },
+  {
+   "card_id": "EM_9_b",
+   "card_type": "number",
+   "name": "EMERALD 9",
+   "color": "emerald",
+   "value": 9,
+   "power_level": 1,
+   "asset": "cards/png/num_EM_9.png"
+  },
+  {
+   "card_id": "AM_0_a",
+   "card_type": "number",
+   "name": "AMBER 0",
+   "color": "amber",
+   "value": 0,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_0.png"
+  },
+  {
+   "card_id": "AM_0_b",
+   "card_type": "number",
+   "name": "AMBER 0",
+   "color": "amber",
+   "value": 0,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_0.png"
+  },
+  {
+   "card_id": "AM_1_a",
+   "card_type": "number",
+   "name": "AMBER 1",
+   "color": "amber",
+   "value": 1,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_1.png"
+  },
+  {
+   "card_id": "AM_1_b",
+   "card_type": "number",
+   "name": "AMBER 1",
+   "color": "amber",
+   "value": 1,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_1.png"
+  },
+  {
+   "card_id": "AM_2_a",
+   "card_type": "number",
+   "name": "AMBER 2",
+   "color": "amber",
+   "value": 2,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_2.png"
+  },
+  {
+   "card_id": "AM_2_b",
+   "card_type": "number",
+   "name": "AMBER 2",
+   "color": "amber",
+   "value": 2,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_2.png"
+  },
+  {
+   "card_id": "AM_3_a",
+   "card_type": "number",
+   "name": "AMBER 3",
+   "color": "amber",
+   "value": 3,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_3.png"
+  },
+  {
+   "card_id": "AM_3_b",
+   "card_type": "number",
+   "name": "AMBER 3",
+   "color": "amber",
+   "value": 3,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_3.png"
+  },
+  {
+   "card_id": "AM_4_a",
+   "card_type": "number",
+   "name": "AMBER 4",
+   "color": "amber",
+   "value": 4,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_4.png"
+  },
+  {
+   "card_id": "AM_4_b",
+   "card_type": "number",
+   "name": "AMBER 4",
+   "color": "amber",
+   "value": 4,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_4.png"
+  },
+  {
+   "card_id": "AM_5_a",
+   "card_type": "number",
+   "name": "AMBER 5",
+   "color": "amber",
+   "value": 5,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_5.png"
+  },
+  {
+   "card_id": "AM_5_b",
+   "card_type": "number",
+   "name": "AMBER 5",
+   "color": "amber",
+   "value": 5,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_5.png"
+  },
+  {
+   "card_id": "AM_6_a",
+   "card_type": "number",
+   "name": "AMBER 6",
+   "color": "amber",
+   "value": 6,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_6.png"
+  },
+  {
+   "card_id": "AM_6_b",
+   "card_type": "number",
+   "name": "AMBER 6",
+   "color": "amber",
+   "value": 6,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_6.png"
+  },
+  {
+   "card_id": "AM_7_a",
+   "card_type": "number",
+   "name": "AMBER 7",
+   "color": "amber",
+   "value": 7,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_7.png"
+  },
+  {
+   "card_id": "AM_7_b",
+   "card_type": "number",
+   "name": "AMBER 7",
+   "color": "amber",
+   "value": 7,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_7.png"
+  },
+  {
+   "card_id": "AM_8_a",
+   "card_type": "number",
+   "name": "AMBER 8",
+   "color": "amber",
+   "value": 8,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_8.png"
+  },
+  {
+   "card_id": "AM_8_b",
+   "card_type": "number",
+   "name": "AMBER 8",
+   "color": "amber",
+   "value": 8,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_8.png"
+  },
+  {
+   "card_id": "AM_9_a",
+   "card_type": "number",
+   "name": "AMBER 9",
+   "color": "amber",
+   "value": 9,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_9.png"
+  },
+  {
+   "card_id": "AM_9_b",
+   "card_type": "number",
+   "name": "AMBER 9",
+   "color": "amber",
+   "value": 9,
+   "power_level": 1,
+   "asset": "cards/png/num_AM_9.png"
+  },
+  {
+   "card_id": "PLUS_TWO_1",
+   "card_type": "action",
+   "name": "PLUS_TWO",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_PLUS_TWO.png"
+  },
+  {
+   "card_id": "PLUS_TWO_2",
+   "card_type": "action",
+   "name": "PLUS_TWO",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_PLUS_TWO.png"
+  },
+  {
+   "card_id": "DEFLECT_1",
+   "card_type": "action",
+   "name": "DEFLECT",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_DEFLECT.png"
+  },
+  {
+   "card_id": "DEFLECT_2",
+   "card_type": "action",
+   "name": "DEFLECT",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_DEFLECT.png"
+  },
+  {
+   "card_id": "DEFLECT_3",
+   "card_type": "action",
+   "name": "DEFLECT",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_DEFLECT.png"
+  },
+  {
+   "card_id": "DEFLECT_4",
+   "card_type": "action",
+   "name": "DEFLECT",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_DEFLECT.png"
+  },
+  {
+   "card_id": "BOOMERANG_1",
+   "card_type": "action",
+   "name": "BOOMERANG",
+   "color": null,
+   "value": null,
+   "power_level": 4,
+   "asset": "cards/png/act_BOOMERANG.png"
+  },
+  {
+   "card_id": "BOOMERANG_2",
+   "card_type": "action",
+   "name": "BOOMERANG",
+   "color": null,
+   "value": null,
+   "power_level": 4,
+   "asset": "cards/png/act_BOOMERANG.png"
+  },
+  {
+   "card_id": "BOOMERANG_3",
+   "card_type": "action",
+   "name": "BOOMERANG",
+   "color": null,
+   "value": null,
+   "power_level": 4,
+   "asset": "cards/png/act_BOOMERANG.png"
+  },
+  {
+   "card_id": "IMMUNITY_1",
+   "card_type": "action",
+   "name": "IMMUNITY",
+   "color": null,
+   "value": null,
+   "power_level": 4,
+   "asset": "cards/png/act_IMMUNITY.png"
+  },
+  {
+   "card_id": "IMMUNITY_2",
+   "card_type": "action",
+   "name": "IMMUNITY",
+   "color": null,
+   "value": null,
+   "power_level": 4,
+   "asset": "cards/png/act_IMMUNITY.png"
+  },
+  {
+   "card_id": "IMMUNITY_3",
+   "card_type": "action",
+   "name": "IMMUNITY",
+   "color": null,
+   "value": null,
+   "power_level": 4,
+   "asset": "cards/png/act_IMMUNITY.png"
+  },
+  {
+   "card_id": "PICKPOCKET_1",
+   "card_type": "action",
+   "name": "PICKPOCKET",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_PICKPOCKET.png"
+  },
+  {
+   "card_id": "PICKPOCKET_2",
+   "card_type": "action",
+   "name": "PICKPOCKET",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_PICKPOCKET.png"
+  },
+  {
+   "card_id": "PICKPOCKET_3",
+   "card_type": "action",
+   "name": "PICKPOCKET",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_PICKPOCKET.png"
+  },
+  {
+   "card_id": "PICKPOCKET_4",
+   "card_type": "action",
+   "name": "PICKPOCKET",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_PICKPOCKET.png"
+  },
+  {
+   "card_id": "EXCHANGE_1",
+   "card_type": "action",
+   "name": "EXCHANGE",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_EXCHANGE.png"
+  },
+  {
+   "card_id": "EXCHANGE_2",
+   "card_type": "action",
+   "name": "EXCHANGE",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_EXCHANGE.png"
+  },
+  {
+   "card_id": "EXCHANGE_3",
+   "card_type": "action",
+   "name": "EXCHANGE",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_EXCHANGE.png"
+  },
+  {
+   "card_id": "HIJACK_1",
+   "card_type": "action",
+   "name": "HIJACK",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_HIJACK.png"
+  },
+  {
+   "card_id": "HIJACK_2",
+   "card_type": "action",
+   "name": "HIJACK",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_HIJACK.png"
+  },
+  {
+   "card_id": "HIJACK_3",
+   "card_type": "action",
+   "name": "HIJACK",
+   "color": null,
+   "value": null,
+   "power_level": 3,
+   "asset": "cards/png/act_HIJACK.png"
+  },
+  {
+   "card_id": "REVERSE_1",
+   "card_type": "action",
+   "name": "REVERSE",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_REVERSE.png"
+  },
+  {
+   "card_id": "REVERSE_2",
+   "card_type": "action",
+   "name": "REVERSE",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_REVERSE.png"
+  },
+  {
+   "card_id": "SKIP_1",
+   "card_type": "action",
+   "name": "SKIP",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_SKIP.png"
+  },
+  {
+   "card_id": "SKIP_2",
+   "card_type": "action",
+   "name": "SKIP",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_SKIP.png"
+  },
+  {
+   "card_id": "MONOPOLY_1",
+   "card_type": "action",
+   "name": "MONOPOLY",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_MONOPOLY.png"
+  },
+  {
+   "card_id": "MONOPOLY_2",
+   "card_type": "action",
+   "name": "MONOPOLY",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_MONOPOLY.png"
+  },
+  {
+   "card_id": "TAX_1",
+   "card_type": "action",
+   "name": "TAX",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_TAX.png"
+  },
+  {
+   "card_id": "TAX_2",
+   "card_type": "action",
+   "name": "TAX",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_TAX.png"
+  },
+  {
+   "card_id": "DEBT_1",
+   "card_type": "action",
+   "name": "DEBT",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_DEBT.png"
+  },
+  {
+   "card_id": "DEBT_2",
+   "card_type": "action",
+   "name": "DEBT",
+   "color": null,
+   "value": null,
+   "power_level": 2,
+   "asset": "cards/png/act_DEBT.png"
+  },
+  {
+   "card_id": "WILD_1",
+   "card_type": "action",
+   "name": "WILD",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_WILD.png"
+  },
+  {
+   "card_id": "WILD_2",
+   "card_type": "action",
+   "name": "WILD",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_WILD.png"
+  },
+  {
+   "card_id": "CHAOS_1",
+   "card_type": "action",
+   "name": "CHAOS",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_CHAOS.png"
+  },
+  {
+   "card_id": "CHAOS_2",
+   "card_type": "action",
+   "name": "CHAOS",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_CHAOS.png"
+  },
+  {
+   "card_id": "CHAOS_3",
+   "card_type": "action",
+   "name": "CHAOS",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_CHAOS.png"
+  },
+  {
+   "card_id": "CHAOS_4",
+   "card_type": "action",
+   "name": "CHAOS",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_CHAOS.png"
+  },
+  {
+   "card_id": "MUTINY_1",
+   "card_type": "action",
+   "name": "MUTINY",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_MUTINY.png"
+  },
+  {
+   "card_id": "MUTINY_2",
+   "card_type": "action",
+   "name": "MUTINY",
+   "color": null,
+   "value": null,
+   "power_level": 5,
+   "asset": "cards/png/act_MUTINY.png"
+  }
+ ]
+}

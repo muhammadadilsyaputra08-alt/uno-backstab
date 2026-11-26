@@ -1,0 +1,34 @@
+{
+ "orientation": "landscape",
+ "reference_resolution": [
+  2400,
+  1080
+ ],
+ "screens": [
+  "01_splash",
+  "02_main_menu",
+  "03_mode_select",
+  "04_lobby",
+  "05_game_table",
+  "06_color_picker",
+  "07_target_picker",
+  "08_plus_chain",
+  "09_victory",
+  "10_eliminated",
+  "11_how_to_play",
+  "12_settings",
+  "13_ui_kit"
+ ],
+ "fonts": {
+  "display": "Poppins Bold",
+  "body": "Inter"
+ },
+ "palette": {
+  "crimson": "#B91C1C",
+  "azure": "#1D4ED8",
+  "emerald": "#047857",
+  "amber": "#B45309",
+  "black": "#111827",
+  "gold": "#F59E0B"
+ }
+}

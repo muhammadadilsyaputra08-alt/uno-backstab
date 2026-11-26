@@ -1,0 +1,59 @@
+{
+  "app": "BACKSTAB!",
+  "package": "com.backstab.game",
+  "orientation": "landscape",
+  "reference_resolution": [2400, 1080],
+  "entry": "SPLASH",
+  "screens": [
+    {"id": "SPLASH", "composable": "SplashScreen", "file": "ui/Screens.kt", "reference": "01_splash.png",
+     "purpose": "Pramuat 120 kartu + ikon, tampilkan logo",
+     "edges": [{"to": "MENU", "on": "aset selesai dimuat"}]},
+    {"id": "MENU", "composable": "MenuScreen", "file": "ui/Screens.kt", "reference": "02_main_menu.png",
+     "purpose": "Menu utama",
+     "edges": [{"to": "MODE_SELECT", "on": "MAIN"}, {"to": "HOW_TO", "on": "CARA BERMAIN"}, {"to": "SETTINGS", "on": "PENGATURAN / ikon gear"}]},
+    {"id": "MODE_SELECT", "composable": "ModeSelectScreen", "file": "ui/Screens.kt", "reference": "03_mode_select.png",
+     "purpose": "Pilih First to Zero / Last Standing",
+     "edges": [{"to": "LOBBY", "on": "PILIH"}, {"to": "MENU", "on": "kembali"}]},
+    {"id": "LOBBY", "composable": "LobbyScreen", "file": "ui/Screens.kt", "reference": "04_lobby.png",
+     "purpose": "Jumlah pemain 2-6, ambang eliminasi, daftar pemain",
+     "edges": [{"to": "GAME", "on": "MULAI"}, {"to": "MODE_SELECT", "on": "kembali"}]},
+    {"id": "GAME", "composable": "GameScreen", "file": "ui/GameScreen.kt", "reference": "05_game_table.png",
+     "purpose": "Meja permainan 2.5D + semua dialog (warna, target, beri kartu, plus chain, jeda, eliminasi)",
+     "overlays": [
+       {"id": "COLOR_PICKER", "composable": "ColorDialog", "reference": "06_color_picker.png"},
+       {"id": "TARGET_PICKER", "composable": "TargetDialog", "reference": "07_target_picker.png"},
+       {"id": "PLUS_CHAIN", "composable": "ChainDialog", "reference": "08_plus_chain.png"},
+       {"id": "ELIMINATED", "composable": "EliminatedDialog", "reference": "10_eliminated.png"},
+       {"id": "GIVE_CARD", "composable": "GiveDialog", "reference": null},
+       {"id": "PAUSE", "composable": "PauseDialog", "reference": null}
+     ],
+     "edges": [{"to": "VICTORY", "on": "Phase.Over"}, {"to": "MENU", "on": "JEDA > MENU UTAMA"}]},
+    {"id": "VICTORY", "composable": "VictoryScreen", "file": "ui/Screens.kt", "reference": "09_victory.png",
+     "purpose": "Pemenang, peringkat, durasi, chain terpanjang",
+     "edges": [{"to": "GAME", "on": "MAIN LAGI"}, {"to": "MENU", "on": "MENU UTAMA"}]},
+    {"id": "HOW_TO", "composable": "HowToScreen", "file": "ui/Screens.kt", "reference": "11_how_to_play.png",
+     "purpose": "Cara bermain (2 halaman)", "edges": [{"to": "MENU", "on": "kembali"}]},
+    {"id": "SETTINGS", "composable": "SettingsScreen", "file": "ui/Screens.kt", "reference": "12_settings.png",
+     "purpose": "Suara, musik, getaran, kecepatan animasi", "edges": [{"to": "MENU", "on": "kembali"}]}
+  ],
+  "engine_state_machine": {
+    "source": "PRD §14.1 → engine/Models.kt Phase",
+    "phases": {
+      "Turn": "PlayerTurn + ValidateAction + PlayCard/Combo",
+      "Respond": "PenaltyChain + DefenseResponse",
+      "Give": "ResolveEffect (HIJACK, pemain memilih kartu yang diberikan)",
+      "Call": "ValidateCall (STAB!/BACKSTAB!)",
+      "Over": "VictoryCheck"
+    },
+    "pipeline_prd_15": ["pilih aksi", "validasi legalitas", "pindah kartu", "efek", "update state", "cek STAB/BACKSTAB/eliminasi", "tentukan pemain berikutnya"]
+  },
+  "invariants": {
+    "deck_total": 120, "number_cards": 80, "action_cards": 40,
+    "starting_hand": 7, "elimination_threshold": 15, "players": [2, 6],
+    "card_conservation": "hands + draw + discard == 120 (dicek di GameEngine.invariant() setiap aksi)"
+  },
+  "tests": {
+    "unit": "app/src/test/java/com/backstab/game/EngineTest.kt",
+    "simulation": "EngineTest.botSimulationAlwaysFinishesAndConservesCards"
+  }
+}

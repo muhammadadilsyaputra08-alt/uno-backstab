@@ -1,0 +1,30 @@
+{
+  "project_name": "backstab-android",
+  "current_phase": "Fase 3: QA & Hardening",
+  "last_updated": "2026-11-26T04:18:35Z",
+  "architecture_summary": "Stack: Kotlin 2.0 + Jetpack Compose (single module). engine/ pure-Kotlin rules (PRD v2.3 (minSdk 26), state machine Turn/Respond/Give/Call/Over) + Bot; ui/ renders 2400x1080 reference stage scaled uniformly; GameViewModel drives bot loop; harness/ verifies app map, deck, assets; CI via GitHub Actions.",
+  "stack": "android-compose-kotlin",
+  "verified_files": [
+    "PROGRESS_STATE.json",
+    "app/src/main/java/com/backstab/game/engine/Models.kt",
+    "app/src/main/java/com/backstab/game/engine/Deck.kt",
+    "app/src/main/java/com/backstab/game/engine/GameEngine.kt",
+    "app/src/main/java/com/backstab/game/engine/Bot.kt",
+    "app/src/test/java/com/backstab/game/EngineTest.kt",
+    "harness/scripts/appmap_check.py",
+    "harness/app_map.json"
+  ],
+  "pending_tasks": [
+    "Run first GitHub Actions build and fix any Compose compile errors (UI layer not compiled locally: no Android SDK/network)",
+    "Visual QA on device vs harness/reference_screens (positions, font sizes)",
+    "Playtest balancing: lsAnte, chain frequency, match duration",
+    "Add instrumented Compose smoke test",
+    "Add audio assets for music toggle"
+  ],
+  "known_issues": [
+    "UI layer (ui/, MainActivity) unverified by compiler in this environment",
+    "Gradle/AGP build not run locally (no Android SDK, no network)",
+    "Music toggle has no audio asset"
+  ],
+  "session_summary": "Engine verified: 11 JUnit tests + 1500 bot games (0 illegal actions, 120-card invariant held). Harness OK (8 screens, 120 cards, 16 icons). UI written to match reference screens; CI workflows created."
+}
