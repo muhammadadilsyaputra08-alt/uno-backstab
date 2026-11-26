@@ -25,9 +25,9 @@ object Prefs {
         lastPlayers = sp.getInt("players", 5).coerceIn(2, 6)
     }
 
-    fun setSound(v: Boolean) { sound = v; sp.edit().putBoolean("sound", v).apply() }
-    fun setMusic(v: Boolean) { music = v; sp.edit().putBoolean("music", v).apply() }
-    fun setVibrate(v: Boolean) { vibrate = v; sp.edit().putBoolean("vibrate", v).apply() }
-    fun setAnimSpeed(v: Float) { animSpeed = v.coerceIn(0.5f, 2f); sp.edit().putFloat("animSpeed", animSpeed).apply() }
-    fun setLastPlayers(v: Int) { lastPlayers = v; sp.edit().putInt("players", v).apply() }
+    @JvmName("applySound") fun setSound(v: Boolean) { sound = v; sp.edit().putBoolean("sound", v).apply() }
+    @JvmName("applyMusic") fun setMusic(v: Boolean) { music = v; sp.edit().putBoolean("music", v).apply() }
+    @JvmName("applyVibrate") fun setVibrate(v: Boolean) { vibrate = v; sp.edit().putBoolean("vibrate", v).apply() }
+    @JvmName("applyAnimSpeed") fun setAnimSpeed(v: Float) { animSpeed = v.coerceIn(0.5f, 2f); sp.edit().putFloat("animSpeed", animSpeed).apply() }
+    @JvmName("applyLastPlayers") fun setLastPlayers(v: Int) { lastPlayers = v; sp.edit().putInt("players", v).apply() }
 }
