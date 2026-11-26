@@ -25,10 +25,10 @@ class GameEngine(val s: GameState, private val rng: Random) {
 
     private fun setup() {
         s.drawPile += Deck.build().shuffled(rng)
-        repeat(7) { for (p in s.players) p.hand += s.drawPile.removeLast() }
+        repeat(7) { for (p in s.players) p.hand += s.drawPile.removeAt(s.drawPile.lastIndex) }
         // Kartu awal harus Number Card (PRD §9.1 #5-6)
         while (s.drawPile.last().type != CardType.NUMBER) s.drawPile.shuffle(rng)
-        val first = s.drawPile.removeLast()
+        val first = s.drawPile.removeAt(s.drawPile.lastIndex)
         s.discard += first
         s.activeColor = first.color!!
         s.lastValue = first.value
@@ -183,7 +183,7 @@ class GameEngine(val s: GameState, private val rng: Random) {
         repeat(n) {
             if (s.drawPile.isEmpty()) reshuffle()
             if (s.drawPile.isEmpty()) return got
-            val c = s.drawPile.removeLast()
+            val c = s.drawPile.removeAt(s.drawPile.lastIndex)
             s.players[p].hand += c
             got += c
         }
@@ -193,7 +193,7 @@ class GameEngine(val s: GameState, private val rng: Random) {
     /** §18.7: discard (kecuali kartu teratas) dikocok menjadi Draw Pile. */
     private fun reshuffle() {
         if (s.discard.size <= 1) return
-        val topCard = s.discard.removeLast()
+        val topCard = s.discard.removeAt(s.discard.lastIndex)
         s.drawPile += s.discard.shuffled(rng)
         s.discard.clear()
         s.discard += topCard

@@ -48,6 +48,34 @@ sealed interface GameDialog {
 
 data class Toast(val id: Int, val text: String)
 
+const val PILE_DRAW = -1
+const val PILE_DISCARD = -2
+
+/** Satu kartu yang sedang terbang dari [from] ke [to] (id pemain atau PILE_*). card == null → tertutup. */
+data class Flight(
+    val id: Int, val from: Int, val to: Int, val card: Card?,
+    val delayMs: Long, val durMs: Long,
+    val fromX: Float = Float.NaN, val fromY: Float = Float.NaN,
+)
+
+internal val handOrder: Comparator<Card> = compareBy({ it.color?.ordinal ?: 9 }, { it.value ?: 99 }, { it.type.ordinal })
+
+internal fun handSpan(n: Int): Float = if (n <= 10) 1250f else minOf(1500f, 1250f + (n - 10) * 30f)
+internal fun handSpacing(n: Int): Float = if (n <= 1) 0f else minOf(158f, handSpan(n) / (n - 1))
+internal fun handCardX(i: Int, n: Int): Float = 1200f + (i - (n - 1) / 2f) * handSpacing(n)
+
+private fun Action.actorId(): Int = when (this) {
+    is Action.Play -> player
+    is Action.Draw -> player
+    is Action.Pass -> player
+    is Action.Take -> player
+    is Action.Chain -> player
+    is Action.Defend -> player
+    is Action.Give -> player
+    is Action.Declare -> player
+    is Action.CallTimeout -> player
+}
+
 data class GameUi(
     val mode: Mode,
     val threshold: Int,
@@ -88,6 +116,18 @@ class GameViewModel : ViewModel() {
     var paused by mutableStateOf(false); private set
     var callStartedAt by mutableStateOf(0L); private set
     var preview by mutableStateOf<Preview?>(null); private set
+    var flights by mutableStateOf<List<Flight>>(emptyList()); private set
+    var holdIds by mutableStateOf<Set<String>>(emptySet()); private set   // kartu yang masih "di perjalanan" (disembunyikan di tujuan)
+    var thinking by mutableStateOf<Int?>(null); private set
+
+    private var flightSeq = 0
+    private var flightEndMs = 0L
+    private var settleMs = 0L
+    private var snapHand: List<Card> = emptyList()
+    private var snapDiscard: Set<String> = emptySet()
+    private var animActor = -1
+    private var animGiveTarget = -1
+    private var animGiveCardId: String? = null
 
     // ------------------------------------------------------------ lifecycle
 
@@ -96,17 +136,23 @@ class GameViewModel : ViewModel() {
         engine = GameEngine.newGame(mode, playerCount, threshold)
         startMs = System.currentTimeMillis()
         selected = emptyList(); dialog = null; result = null; paused = false; toast = null; preview = null
+        flights = emptyList(); holdIds = emptySet(); thinking = null; settleMs = 0; animActor = -1
+        engine?.let { g ->
+            snapHand = g.player(HUMAN).hand.sortedWith(handOrder)
+            snapDiscard = g.s.discard.map { it.id }.toSet()
+        }
         refresh()
         runLoop()
     }
 
     fun clear() {
         loop?.cancel(); engine = null; ui = null; result = null; dialog = null; selected = emptyList(); preview = null
+        flights = emptyList(); holdIds = emptySet(); thinking = null
     }
 
     val active get() = engine != null
 
-    fun setPaused(p: Boolean) {
+    @JvmName("applyPaused") fun setPaused(p: Boolean) {
         paused = p
         dialog = if (p) GameDialog.Pause else if (dialog == GameDialog.Pause) null else dialog
     }
@@ -117,8 +163,10 @@ class GameViewModel : ViewModel() {
 
     private fun runLoop() {
         loop?.cancel()
+        thinking = null
         val e = engine ?: return
         loop = viewModelScope.launch {
+            if (settleMs > 0) { val d = settleMs; settleMs = 0; delay(d) }
             while (isActive) {
                 while (paused) delay(100)
                 val ph = e.s.phase
@@ -130,16 +178,24 @@ class GameViewModel : ViewModel() {
                         callStartedAt = System.currentTimeMillis()
                         delay(CALL_WINDOW_MS)
                         while (paused) delay(100)
-                        if (e.s.phase == ph) { e.apply(Action.CallTimeout(actor)); refresh() }
+                        if (e.s.phase == ph) { act(e, Action.CallTimeout(actor)); refresh() }
                         continue
                     }
                     return@launch
                 }
-                val base = if (ph is Phase.Call) 450.0 else Random.nextDouble(800.0, 1250.0)
+                // Bot "berpikir" dulu: indikator tampil, lalu kartu diturunkan.
+                val base = when (ph) {
+                    is Phase.Call -> 450.0
+                    is Phase.Give -> Random.nextDouble(1200.0, 2000.0)
+                    is Phase.Respond -> Random.nextDouble(1300.0, 2200.0)
+                    else -> Random.nextDouble(1600.0, 2800.0)
+                }
+                if (ph !is Phase.Call) thinking = actor
                 delay((base / Prefs.animSpeed).toLong())
                 while (paused) delay(100)
+                thinking = null
                 var action = bot.decide(e, actor)
-                var res = e.apply(action)
+                var res = act(e, action)
                 if (res is Result.Illegal) {   // pengaman: tidak boleh terjadi
                     action = when (ph) {
                         is Phase.Respond -> Action.Take(actor)
@@ -147,9 +203,10 @@ class GameViewModel : ViewModel() {
                         is Phase.Turn -> if (e.s.drawnCardId != null) Action.Pass(actor) else Action.Draw(actor)
                         else -> action
                     }
-                    res = e.apply(action)
+                    res = act(e, action)
                 }
                 refresh()
+                if (flightEndMs > 0) delay(flightEndMs + 250)   // tunggu animasi kartu selesai
             }
         }
     }
@@ -173,14 +230,26 @@ class GameViewModel : ViewModel() {
 
     private fun human() = engine?.player(HUMAN)
 
+    /** Terapkan aksi sambil mengambil snapshot untuk animasi kartu. */
+    private fun act(e: GameEngine, a: Action): Result {
+        snapHand = e.player(HUMAN).hand.sortedWith(handOrder)
+        snapDiscard = e.s.discard.map { it.id }.toSet()
+        animActor = a.actorId()
+        val ph = e.s.phase
+        animGiveTarget = if (a is Action.Give && ph is Phase.Give) ph.target else -1
+        animGiveCardId = (a as? Action.Give)?.cardId
+        return e.apply(a)
+    }
+
     private fun send(a: Action): Boolean {
         val e = engine ?: return false
-        val r = e.apply(a)
+        val r = act(e, a)
         if (r is Result.Illegal) { showToast(r.reason); return false }
         selected = emptyList()
         dialog = if (dialog == GameDialog.Pause) dialog else null
         Feedback.play()
         refresh()
+        settleMs = if (flightEndMs > 0) flightEndMs + 150 else 0
         runLoop()
         return true
     }
@@ -326,6 +395,111 @@ class GameViewModel : ViewModel() {
         else -> ""
     }
 
+    // ------------------------------------------------------ card animation
+
+    private fun buildFlights(e: GameEngine, evs: List<GameEvent>) {
+        flightEndMs = 0
+        val actor = animActor
+        animActor = -1
+        if (actor < 0 && evs.isEmpty()) return
+        val s = e.s
+        val spd = Prefs.animSpeed.coerceAtLeast(0.5f)
+        val dur = (850 / spd).toLong()
+        val gap = (150 / spd).toLong()
+        val out = mutableListOf<Flight>()
+        val hold = mutableSetOf<String>()
+        var t = 0L
+        fun fly(from: Int, to: Int, card: Card?, fx: Float = Float.NaN, fy: Float = Float.NaN) {
+            out += Flight(++flightSeq, from, to, card, t, dur, fx, fy)
+            t += gap
+        }
+
+        val before = snapHand
+        val nowHand = e.player(HUMAN).hand.sortedWith(handOrder)
+        val beforeIds = before.map { it.id }.toSet()
+        val nowIds = nowHand.map { it.id }.toSet()
+        val newDisc = if (actor >= 0) s.discard.filter { it.id !in snapDiscard } else emptyList()
+        val discIds = newDisc.map { it.id }.toSet()
+        val arrivals = ArrayDeque(nowHand.filter { it.id !in beforeIds })
+        val departures = ArrayDeque(before.filter { it.id !in nowIds && it.id !in discIds && it.id != animGiveCardId })
+        fun leave(c: Card, to: Int) {
+            val idx = before.indexOfFirst { it.id == c.id }
+            if (idx >= 0) fly(HUMAN, to, c, handCardX(idx, before.size), 1000f) else fly(HUMAN, to, c)
+        }
+        fun arrive(c: Card, from: Int) { hold += c.id; fly(from, HUMAN, c) }
+
+        // 1) kartu yang dimainkan → tumpukan buang
+        for ((i, c) in newDisc.withIndex()) {
+            hold += c.id
+            if (i >= 6) continue
+            if (actor == HUMAN) leave(c, PILE_DISCARD) else fly(actor, PILE_DISCARD, c)
+        }
+
+        // 2) efek: ambil / curi / tukar / mutiny
+        for (ev in evs) when (ev.type) {
+            EventType.DREW, EventType.FORCED_DRAW, EventType.CALL_FAILED -> {
+                if (ev.player == HUMAN) {
+                    for (i in 0 until ev.n) {
+                        val c = arrivals.removeFirstOrNull() ?: break
+                        if (i < 6) arrive(c, PILE_DRAW) else hold += c.id
+                    }
+                } else repeat(minOf(ev.n, 5)) { fly(PILE_DRAW, ev.player, null) }
+            }
+            EventType.TAX -> for (o in s.players) if (o.id != ev.player && !o.eliminated) {
+                if (o.id == HUMAN) arrivals.removeFirstOrNull()?.let { arrive(it, PILE_DRAW) } else fly(PILE_DRAW, o.id, null)
+            }
+            EventType.STOLE -> repeat(minOf(ev.n, 4)) {
+                when {
+                    ev.player == HUMAN -> arrivals.removeFirstOrNull()?.let { arrive(it, ev.other) }
+                    ev.other == HUMAN -> departures.removeFirstOrNull()?.let { leave(it, ev.player) }
+                    else -> fly(ev.other, ev.player, null)
+                }
+            }
+            EventType.SWAPPED -> {
+                if (ev.player == HUMAN || ev.other == HUMAN) {
+                    val other = if (ev.player == HUMAN) ev.other else ev.player
+                    var i = 0
+                    while (arrivals.isNotEmpty()) { val c = arrivals.removeFirstOrNull() ?: break; if (i++ < 4) arrive(c, other) else hold += c.id }
+                    var j = 0
+                    while (departures.isNotEmpty()) { val c = departures.removeFirstOrNull() ?: break; if (j++ < 4) leave(c, other) }
+                } else repeat(2) { fly(ev.player, ev.other, null); fly(ev.other, ev.player, null) }
+            }
+            EventType.MUTINY -> for (o in s.players.filter { !it.eliminated }) {
+                val to = e.nextActive(o.id)
+                when {
+                    o.id == HUMAN -> departures.removeFirstOrNull()?.let { leave(it, to) }
+                    to == HUMAN -> arrivals.removeFirstOrNull()?.let { arrive(it, o.id) }
+                    else -> fly(o.id, to, null)
+                }
+            }
+            else -> {}
+        }
+
+        // 3) Give (hijack): satu kartu berpindah ke target
+        if (animGiveTarget >= 0) {
+            val gid = animGiveCardId
+            when {
+                actor == HUMAN -> before.firstOrNull { it.id == gid }?.let { leave(it, animGiveTarget) }
+                animGiveTarget == HUMAN -> arrivals.removeFirstOrNull()?.let { arrive(it, actor) }
+                else -> fly(actor, animGiveTarget, null)
+            }
+        }
+        animGiveTarget = -1; animGiveCardId = null
+
+        if (out.isEmpty()) return
+        val end = out.maxOf { it.delayMs + it.durMs }
+        flightEndMs = end
+        flights = flights + out
+        holdIds = holdIds + hold
+        val ids = out.map { it.id }.toSet()
+        val held = hold.toSet()
+        viewModelScope.launch {
+            delay(end + 60)
+            flights = flights.filter { it.id !in ids }
+            holdIds = holdIds - held
+        }
+    }
+
     private fun showToast(text: String) { toast = Toast(++toastId, text) }
 
     private fun refresh() {
@@ -357,7 +531,7 @@ class GameViewModel : ViewModel() {
         ui = GameUi(
             mode = s.mode, threshold = s.threshold,
             players = s.players.map { PlayerUi(it.id, it.name, it.hand.size, it.eliminated, it.isHuman, it.stabCalled, actor == it.id) },
-            hand = h.hand.sortedWith(compareBy({ it.color?.ordinal ?: 9 }, { it.value ?: 99 }, { it.type.ordinal })),
+            hand = h.hand.sortedWith(handOrder),
             playable = playable,
             topCards = s.discard.takeLast(3),
             drawCount = s.drawPile.size,
@@ -376,6 +550,7 @@ class GameViewModel : ViewModel() {
         updatePreview()
 
         val evs = e.drainEvents()
+        buildFlights(e, evs)
         if (evs.isNotEmpty()) {
             val lines = evs.mapNotNull { describe(it, s) }
             if (lines.isNotEmpty()) showToast(lines.takeLast(2).joinToString("  •  "))

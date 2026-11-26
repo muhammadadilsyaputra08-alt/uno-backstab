@@ -2,6 +2,7 @@ package com.backstab.game.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.backstab.game.data.Prefs
 import com.backstab.game.engine.*
 
@@ -60,12 +62,13 @@ fun GameScreen(vm: GameViewModel, onMenu: () -> Unit) {
         TableCanvas()
         Hud(ui, vm)
         val seats = seatsFor(ui.players.size)
-        ui.players.filter { it.id != 0 }.forEachIndexed { i, p -> Opponent(p, seats[i], ui) }
+        ui.players.filter { it.id != 0 }.forEachIndexed { i, p -> Opponent(p, seats[i], ui, vm.thinking == p.id) }
         CenterPiles(ui, vm)
         PreviewBanner(vm)
         ToastBanner(vm)
         PlayerPanel(ui, vm)
-        HandFan(ui, vm.selected) { vm.toggle(it) }
+        HandFan(ui, vm.selected, vm.holdIds) { vm.toggle(it) }
+        FlightLayer(vm.flights, ui.players.size)
         Dialogs(ui, vm, onMenu)
     }
 }
@@ -125,7 +128,7 @@ private fun Hud(ui: GameUi, vm: GameViewModel) {
 // ------------------------------------------------------------- opponents
 
 @Composable
-private fun Opponent(p: PlayerUi, seat: Seat, ui: GameUi) {
+private fun Opponent(p: PlayerUi, seat: Seat, ui: GameUi, thinking: Boolean) {
     val dim = p.eliminated
     val countText = if (ui.mode == Mode.LAST_STANDING) "${p.count}/${ui.threshold}" else p.count.toString()
     val danger = ui.mode == Mode.LAST_STANDING && p.count >= ui.threshold - 3
@@ -136,8 +139,9 @@ private fun Opponent(p: PlayerUi, seat: Seat, ui: GameUi) {
                 Avatar(p.id, p.name, 100, Modifier.atC(cx, 300, 100, 100), glow = p.isTurn)
                 BText(p.name, 36, modifier = Modifier.atC(cx, 373, 220, 50))
                 CountPill(countText, danger, Modifier.atC(cx, 432, 120, 46))
-                if (p.stab && !dim) Pill("STAB!", Modifier.atC(cx, 481, 126, 38), fill = BS.Gold, stroke = BS.GoldLight, color = Color(0xFF1A1206), size = 24, family = Poppins)
+                if (p.stab && !dim && !thinking) Pill("STAB!", Modifier.atC(cx, 481, 126, 38), fill = BS.Gold, stroke = BS.GoldLight, color = Color(0xFF1A1206), size = 24, family = Poppins)
                 if (!dim) CardFan(p.count, vertical = true, cx = if (seat == Seat.LEFT) 405f else 1995f, cy = 450f)
+                if (thinking && !dim) ThinkingPill(Modifier.atC(cx, 481, 214, 38))
             }
             if (dim) Icon("ic_skull", 60, Color(0xFFFF6B6B), Modifier.atC(cx, 300, 60, 60))
         }
@@ -152,12 +156,23 @@ private fun Opponent(p: PlayerUi, seat: Seat, ui: GameUi) {
                 Avatar(p.id, p.name, 90, Modifier.atC(ax, ay, 90, 90), glow = p.isTurn)
                 BText(p.name, 34, modifier = Modifier.at(ax + 55, ay - 30, 200, 44), align = TextAlign.Start)
                 CountPill(countText, danger, Modifier.at(ax + 55, ay + 8, 120, 46))
-                if (p.stab && !dim) Pill("STAB!", Modifier.at(ax + 190, ay + 12, 118, 38), fill = BS.Gold, stroke = BS.GoldLight, color = Color(0xFF1A1206), size = 22, family = Poppins)
+                if (p.stab && !dim && !thinking) Pill("STAB!", Modifier.at(ax + 190, ay + 12, 118, 38), fill = BS.Gold, stroke = BS.GoldLight, color = Color(0xFF1A1206), size = 22, family = Poppins)
                 if (!dim) CardFan(p.count, vertical = false, cx = fanX, cy = if (seat == Seat.TOP_CENTER) 225f else 215f)
+                if (thinking && !dim) ThinkingPill(Modifier.at(ax + 190, if (seat == Seat.TOP_CENTER) 105f else ay + 12, 214, 38))
             }
             if (dim) Icon("ic_skull", 50, Color(0xFFFF6B6B), Modifier.atC(ax, ay, 50, 50))
         }
     }
+}
+
+@Composable
+private fun ThinkingPill(modifier: Modifier) {
+    val tr = rememberInfiniteTransition(label = "think")
+    val k by tr.animateFloat(0f, 3f, infiniteRepeatable(tween(1200, easing = LinearEasing)), label = "dots")
+    Pill(
+        "BERPIKIR" + ".".repeat(k.toInt().coerceIn(0, 2) + 1), modifier,
+        fill = Color(0xFF0F1830), stroke = BS.Gold, color = BS.GoldLight, size = 22, family = Poppins,
+    )
 }
 
 @Composable
@@ -201,15 +216,20 @@ private fun CenterPiles(ui: GameUi, vm: GameViewModel) {
         Box(Modifier.atC(1345, 470, 360, 360).background(Brush.radialGradient(listOf(BS.cardColor(ui.activeColor).copy(alpha = 0.38f), Color.Transparent)), CircleShape))
         val under = ui.topCards.dropLast(1)
         under.forEachIndexed { i, c ->
-            CardImage(c, Modifier.atC(1345f + (i - 1) * 26f, 478f, 140, 212).graphicsLayer { rotationZ = if (i == 0) -17f else 11f })
+            CardImage(c, Modifier.atC(1345f + (i - 1) * 26f, 478f, 140, 212).graphicsLayer {
+                rotationZ = if (i == 0) -17f else 11f
+                alpha = if (c.id in vm.holdIds) 0f else 1f
+            })
         }
         val top = ui.topCards.last()
         val speed = Prefs.animSpeed
-        val anim = remember(top.id) { Animatable(0f) }
+        // Bila kartu datang lewat animasi terbang, tidak perlu efek "pop" lagi.
+        val anim = remember(top.id) { Animatable(if (top.id in vm.holdIds) 1f else 0f) }
         LaunchedEffect(top.id) { anim.animateTo(1f, tween((320 / speed).toInt())) }
         CardImage(top, Modifier.atC(1345, 468, 140, 212).graphicsLayer {
             val sc = 1.4f - 0.4f * anim.value
-            scaleX = sc; scaleY = sc; alpha = 0.35f + 0.65f * anim.value; rotationZ = -4f - 14f * (1f - anim.value)
+            scaleX = sc; scaleY = sc; rotationZ = -4f - 14f * (1f - anim.value)
+            alpha = if (top.id in vm.holdIds) 0f else 0.35f + 0.65f * anim.value
         })
         Pill("DISCARD", Modifier.atC(1340, 620, 160, 44), fill = Color(0xFF0F1830), size = 24)
     }
@@ -293,30 +313,102 @@ private fun PlayerPanel(ui: GameUi, vm: GameViewModel) {
 // ------------------------------------------------------------------ hand
 
 @Composable
-private fun HandFan(ui: GameUi, selected: List<String>, onTap: (String) -> Unit) {
+private fun HandFan(ui: GameUi, selected: List<String>, hold: Set<String>, onTap: (String) -> Unit) {
     val n = ui.hand.size
     if (n == 0) return
     val mid = (n - 1) / 2f
-    val spacing = if (n <= 1) 0f else minOf(158f, 1250f / (n - 1))
-    val ang = if (n <= 1) 0f else minOf(3.4f, 28f / (n - 1))
+    val spacing = handSpacing(n)
+    val ang = if (n <= 1) 0f else minOf(3.4f, 14f / mid)
+    // Tangan besar: kartu sedikit mengecil, rentang melebar, tepi kipas hanya turun sedikit (tidak tenggelam).
+    val cw = if (n > 10) 235f * maxOf(0.82f, 1f - (n - 10) * 0.03f) else 235f
+    val ch = cw * 356f / 235f
     val interactive = ui.humanTurn || ui.phase == Phase.Respond(0)
     val speed = Prefs.animSpeed
-    ui.hand.forEachIndexed { i, card ->
-        key(card.id) {
-            val t = i - mid
-            val sel = card.id in selected
-            val dim = interactive && card.id !in ui.playable
-            val lift by animateFloatAsState(if (sel) -112f else 0f, tween((170 / speed).toInt()), label = "lift")
-            Box(
-                Modifier.atC(1200f + t * spacing, 1068f + t * t * 4f + lift, 235, 356)
-                    .graphicsLayer { rotationZ = t * ang }
-                    .clickable { onTap(card.id) },
-            ) {
-                CardImage(card, Modifier.fillMaxSize(), dim = dim)
-                if (sel) Box(Modifier.fillMaxSize().border(r(7), BS.GoldLight, RoundedCornerShape(r(24))))
+    Box(Modifier.at(0, 0, 2400, 1080)) {
+        ui.hand.forEachIndexed { i, card ->
+            key(card.id) {
+                val t = i - mid
+                val sel = card.id in selected
+                val dim = interactive && card.id !in ui.playable
+                val lift by animateFloatAsState(if (sel) -112f else 0f, tween((170 / speed).toInt()), label = "lift")
+                val drop = if (mid > 0f) minOf(4f * t * t, 45f * (t / mid) * (t / mid)) else 0f
+                Box(
+                    Modifier.atC(1200f + t * spacing, 890f + ch / 2f + drop + lift, cw, ch)
+                        .zIndex(if (sel) 100f else i.toFloat())
+                        .graphicsLayer {
+                            rotationZ = t * ang
+                            alpha = if (card.id in hold) 0f else 1f
+                        }
+                        .clickable { onTap(card.id) },
+                ) {
+                    CardImage(card, Modifier.fillMaxSize(), dim = dim)
+                    if (sel) Box(Modifier.fillMaxSize().border(r(7), BS.GoldLight, RoundedCornerShape(r(24))))
+                }
             }
         }
     }
+}
+
+// ------------------------------------------------------- flying cards
+
+internal fun seatAnchor(id: Int, count: Int): Offset = when (id) {
+    PILE_DRAW -> Offset(1055f, 462f)
+    PILE_DISCARD -> Offset(1345f, 468f)
+    0 -> Offset(1200f, 1010f)
+    else -> when (seatsFor(count).getOrNull(id - 1)) {
+        Seat.LEFT -> Offset(405f, 450f)
+        Seat.RIGHT -> Offset(1995f, 450f)
+        Seat.TOP_LEFT -> Offset(760f, 215f)
+        Seat.TOP_RIGHT -> Offset(1640f, 215f)
+        Seat.TOP_CENTER -> Offset(1330f, 225f)
+        null -> Offset(1200f, 300f)
+    }
+}
+
+private fun flightSize(id: Int): Pair<Float, Float> = when (id) {
+    0 -> 235f to 356f
+    PILE_DRAW, PILE_DISCARD -> 140f to 212f
+    else -> 92f to 140f
+}
+
+@Composable
+private fun FlightLayer(flights: List<Flight>, playerCount: Int) {
+    if (flights.isEmpty()) return
+    Box(Modifier.at(0, 0, 2400, 1080)) {
+        for (f in flights) key(f.id) { FlightCard(f, playerCount) }
+    }
+}
+
+@Composable
+private fun FlightCard(f: Flight, playerCount: Int) {
+    val u = LocalU.current
+    val a = remember(f.id) { Animatable(0f) }
+    var started by remember(f.id) { mutableStateOf(false) }
+    LaunchedEffect(f.id) {
+        kotlinx.coroutines.delay(f.delayMs)
+        started = true
+        a.animateTo(1f, tween(f.durMs.toInt(), easing = FastOutSlowInEasing))
+    }
+    if (!started) return
+    val fa = seatAnchor(f.from, playerCount)
+    val ta = seatAnchor(f.to, playerCount)
+    val fx = if (f.fromX.isNaN()) fa.x else f.fromX
+    val fy = if (f.fromY.isNaN()) fa.y else f.fromY
+    val (fw, fh) = flightSize(f.from)
+    val (tw, _) = flightSize(f.to)
+    CardImage(
+        f.card,
+        Modifier.atC(fx, fy, fw, fh).graphicsLayer {
+            val p = a.value
+            val k = u * density
+            translationX = (ta.x - fx) * k * p
+            translationY = (ta.y - fy) * k * p - kotlin.math.sin(kotlin.math.PI.toFloat() * p) * 70f * k
+            val sc = 1f + (tw / fw - 1f) * p
+            scaleX = sc; scaleY = sc
+            rotationZ = (if (f.to == PILE_DISCARD) -4f else 0f) * p
+        },
+        faceDown = f.card == null,
+    )
 }
 
 // --------------------------------------------------------------- dialogs
