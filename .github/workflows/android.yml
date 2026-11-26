@@ -35,7 +35,7 @@ jobs:
           java-version: "17"
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew && ./gradlew :app:testDebugUnitTest --stacktrace
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: unit-test-reports
@@ -52,7 +52,7 @@ jobs:
           java-version: "17"
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew && ./gradlew :app:lintDebug --stacktrace
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: lint-report
@@ -85,11 +85,11 @@ jobs:
             echo "Tanpa keystore: APK release tidak bertanda tangan."
           fi
       - run: chmod +x gradlew && ./gradlew :app:assembleDebug :app:assembleRelease :app:bundleRelease --stacktrace
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: backstab-debug-apk
           path: app/build/outputs/apk/debug/*.apk
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: backstab-release
           path: |
