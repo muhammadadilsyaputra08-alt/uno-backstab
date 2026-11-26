@@ -33,7 +33,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - run: chmod +x gradlew && ./gradlew :app:testDebugUnitTest --stacktrace
       - uses: actions/upload-artifact@v4
         if: always()
@@ -50,7 +50,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - run: chmod +x gradlew && ./gradlew :app:lintDebug --stacktrace
       - uses: actions/upload-artifact@v4
         if: always()
@@ -70,7 +70,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Siapkan keystore (jika secret tersedia)
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
